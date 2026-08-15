@@ -1,0 +1,29 @@
+Fiche — Étape 1 : Lecture et prétraitement des lignes
+
+Objectif
+Transformer le fichier source brut en une liste de lignes exploitables par les étapes suivantes, avec leur niveau d'indentation calculé, en isolant proprement ce qui ne doit jamais influencer la pile (lignes vides, commentaires).
+
+Entrée
+Un chemin vers un fichier source (ex: exemple.sk — à toi de choisir l'extension si tu ne l'as pas déjà décidée).
+
+Sortie attendue
+Une structure de données (liste de préférence) où chaque élément représente une ligne de code utile, avec au minimum :
+
+le numéro de ligne d'origine (important pour les futurs messages d'erreur, à garder dès maintenant même si on ne s'en sert pas encore)
+le niveau d'indentation (un entier, ex: nombre d'unités d'indentation, pas le nombre brut d'espaces)
+le contenu de la ligne (texte, sans les espaces d'indentation en préfixe, mais sans autre modification)
+
+Règles précises
+
+Convention d'indentation : tu dois choisir et imposer une seule convention (je recommande : 4 espaces = 1 niveau, tabs interdits ou convertis automatiquement en erreur explicite). Pas de tolérance mixte silencieuse — si une ligne mélange tabs et espaces ou utilise un nombre d'espaces qui n'est pas un multiple de ta base, c'est une erreur claire, pas une déduction approximative.
+Lignes vides : une ligne qui ne contient que des espaces/rien du tout doit être détectée et exclue du résultat (elle ne doit pas avoir de niveau d'indentation ni casser le calcul de la ligne suivante).
+Commentaires : définis ta syntaxe de commentaire (probablement # comme en Python). Une ligne qui commence par # (après ses espaces d'indentation) doit être exclue du résultat, au même titre qu'une ligne vide.
+Point d'attention que tu dois trancher toi-même : que fais-tu d'un commentaire en fin de ligne de code (x = 5 # commentaire) ? Pour la V1, je te suggère de l'ignorer complètement (ne pas le traiter) — ça complexifie sans urgence réelle. À toi de voir si tu veux le gérer dès maintenant ou le mettre de côté comme les autres cas hors périmètre.
+Calcul du niveau : compter les espaces de préfixe, vérifier que c'est un multiple de ta base (4), sinon erreur explicite avec numéro de ligne. Diviser par la base pour obtenir le niveau entier.
+Gestion d'erreur : si une ligne a une indentation invalide, le script doit s'arrêter proprement avec un message clair indiquant le numéro de ligne fautif — pas de plantage brut avec une trace Python illisible.
+
+Ce qui n'est PAS dans cette étape
+Pas de gestion des { }, pas de ;, pas de détection def/fn. Cette étape ne fait que lire et nettoyer — rien d'autre.
+
+Comment tu peux le tester toi-même avant de me l'envoyer
+Crée un petit fichier source avec : quelques lignes à différents niveaux d'indentation, au moins une ligne vide, au moins un commentaire seul sur sa ligne, et une ligne mal indentée (ex: 3 espaces au lieu de 4) pour vérifier que l'erreur se déclenche bien. Affiche le résultat et vérifie à l'œil que chaque ligne a le bon numéro d'origine et le bon niveau.
