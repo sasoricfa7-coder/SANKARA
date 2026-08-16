@@ -1,0 +1,23 @@
+choix : 
+{ 
+SANKARA n'est pas un langage.
+SANKARA n'a pas de compilateur propre.
+SANKARA est dépendant de RUST à 100%.
+...
+}
+
+les choix sont assumés.
+
+AVANTAGES_CHOIX : 
+{
+	Bénéficie d'un compilateur ultra performant, très sûre
+	Bénéficie de toute la communauté RUST mais sans même contribué au compilateur
+	Facile de mettre à jour SANKARA car RUST evite la casse.
+	...
+}
+
+Création :
+{
+	d'abord en python pour le prototypage rapide,
+	puis la v1 est prévu en RUST
+}

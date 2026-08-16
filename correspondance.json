@@ -1,0 +1,5 @@
+{
+	"print" : "println!",
+	"var" : "let",
+	"def" : "fn" 
+}
