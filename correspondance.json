@@ -1,5 +1,10 @@
 {
 	"print" : "println!",
 	"var" : "let",
-	"def" : "fn" 
+	"def" : "fn" ,
+	"elif" : "else if",
+	"not" : "!",
+	"or" : "||" ,
+	"and" : "&&" ,
+	":" : "=>" 
 }
