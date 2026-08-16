@@ -1,0 +1,5 @@
+def main() :// ceci est un test
+	var x: u8 = 2 /* voir si SANKARA va gerer
+
+	*/
+	print("hello world")
