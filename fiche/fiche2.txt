@@ -1,0 +1,30 @@
+Fiche — Étape 2 : Pile d'indentation → génération des { }
+
+Objectif
+Prendre en entrée dictionnaire_final produit par l'étape 1 (numéro de ligne, niveau d'indentation, contenu) et déterminer, pour chaque ligne, où insérer des { et des } en fonction des changements de niveau d'indentation — en respectant l'ordre naturel du fichier.
+
+Principe général : la pile
+Tu maintiens une pile qui représente les niveaux de blocs actuellement "ouverts". Tu parcours les lignes de dictionnaire_final dans l'ordre (donc trié par numéro de ligne, pas dans l'ordre d'insertion du dict si jamais ça diffère — vérifie ce point avec tes dicts Python actuels).
+
+Pour chaque ligne, tu compares son niveau_indentation à la taille actuelle de la pile :
+
+Le niveau augmente (niveau > taille pile) → nouveau bloc qui s'ouvre. Tu empiles ce niveau, et tu dois insérer un { à la fin de la ligne précédente (celle qui vient d'ouvrir le bloc, typiquement une ligne finissant par : selon ta syntaxe — mais à ce stade de l'étape 2, ne te préoccupe pas encore du :, ça viendra avec la correspondance JSON). Pour l'instant, insère juste le { associé à ce changement de niveau.
+Le niveau reste identique (niveau == taille pile - 1, donc même profondeur) → rien à ouvrir ni fermer, la ligne continue au même niveau de bloc.
+Le niveau diminue (niveau < taille pile - 1) → un ou plusieurs blocs se ferment. Tu dépiles autant de fois que nécessaire pour revenir au bon niveau, et pour chaque dépilement tu dois insérer un } — avant le contenu de la ligne courante (puisque le bloc se ferme avant que cette nouvelle ligne, moins indentée, ne s'exécute).
+
+Cas d'erreur à détecter
+
+Saut de plus d'un niveau d'un coup (ex: on passe du niveau 0 directement au niveau 2, sans jamais passer par 1) → erreur explicite avec numéro de ligne, arrêt propre. Un saut de +1 seulement est valide, jamais plus.
+Niveau qui ne correspond à aucun niveau connu de la pile lors d'une diminution — normalement, si tu dépiles correctement, ce cas ne devrait pas arriver, mais prévois quand même une vérification de cohérence (assert ou test explicite) plutôt que de laisser planter Python avec une erreur illisible.
+Fin de fichier avec des blocs encore ouverts — à la fin du parcours, si la pile n'est pas vide, il faut fermer tous les blocs restants (insérer les } manquants). Ce n'est pas une erreur, c'est un cas normal (le fichier se termine, tous les blocs ouverts doivent être refermés).
+
+Sortie attendue
+Une structure qui te permet, pour chaque ligne, de savoir : le contenu original, s'il faut ajouter un { après (et combien, normalement un seul par ligne dans notre cas puisqu'un seul niveau s'ouvre à la fois), et combien de } ajouter avant (potentiellement plusieurs si on ferme plusieurs blocs d'un coup, ex: sortir de deux if imbriqués en une seule ligne moins indentée).
+
+Je te laisse choisir la structure exacte (tu peux enrichir ligne_info avec des clés comme "ouvre_bloc" et "nombre_fermetures", ou faire autrement) — c'est un choix d'implémentation, pas un point de spec à figer avec moi.
+
+Ce qui n'est PAS dans cette étape
+Pas de détection du type de bloc (def/fn vs autre — ça, c'est l'étape 3). Pas de gestion du ;. Pas encore de vraie écriture des { } dans le texte final — tu peux te contenter de calculer où ils vont, l'assemblage textuel définitif peut attendre l'étape 6 si tu préfères, ou le faire dès maintenant si c'est plus simple pour toi de visualiser le résultat. À toi de voir.
+
+Comment tester
+Un petit fichier avec : plusieurs niveaux d'imbrication simple, une fermeture de plusieurs blocs d'un coup (ex: revenir de niveau 3 à niveau 0 en une ligne), et un saut de +2 niveaux d'un coup pour vérifier que l'erreur se déclenche.

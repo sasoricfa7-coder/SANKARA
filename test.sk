@@ -1,8 +1,9 @@
-x = 10
-    // commentaire indenté tout seul sur sa ligne
-y = 20
-    url = "http://exemple.com"
-z = a // b // deux doubles slash sur la meme ligne
-    
-w = 5
-	w2 = 6
+// commentaire non-indenté classique
+    // commentaire indenté classique
+x = 5 // commentaire avec espace avant, cas simple
+y = 5//commentaire collé, sans espace avant
+resultat = a//b // un vrai commentaire après un faux
+url = "http://exemple.com"
+vide =
+    //
+z ;= 1

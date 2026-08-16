@@ -52,19 +52,34 @@ def indentation(dictionnaire) :
         if "//" in ligne : # c'est exprès on verifie d'abord que le code est bien identé
             index = ligne.find("//")
 
-            if index == 0:
-                dictionnaire_commentaire[i] = ligne
+            if index != -1 and ligne[:index].isspace() :
+                if ligne[2:] != "" :
+                    dictionnaire_commentaire[i] = ligne # C'est un choix un commentaire vide sert à quoi ?
+                continue
+
+            elif index == 0 :
+                if ligne[2:] != "" :
+                    dictionnaire_commentaire[i] = ligne # C'est un choix un commentaire vide sert à quoi ?
                 continue
 
             else :
-                temporaire = ligne
-                ligne = ligne[:index]
-                dictionnaire_commentaire[i] = temporaire[index:] # pas besoin de savoir ou était placer, a ce stade le commentaire est à la fin
+                if ligne[index-1].isspace() : # On vérifie que le // au milieu est bien précédé d'un espace
+                    temporaire = ligne
+                    ligne = ligne[:index]
+                    dictionnaire_commentaire[i] = temporaire[index:] # pas besoin de savoir ou était placer, a ce stade le commentaire est à la fin
+                else :
+                    pass # Si c'est collé (ex: une URL ou autre), on laisse passer comme du code normal !
 
         niveau_indentation = nbr_espace // 4
+        ligne = ligne.strip() # on nettoie tout car on a déja calculer l'indentation
+        
+        if ligne.endswith(";") :
+            print(f"{rouge}Erreur de syntaxe [ligne {i}] : Pas de point-virgule (;) dans ce langage !{simple}")
+            arret()
+            
         ligne_info = {
             "niveau_indentation" : niveau_indentation,
-            "contenu" : ligne.lstrip()
+            "contenu" : ligne
         }
         dictionnaire_final[i] = ligne_info
         
