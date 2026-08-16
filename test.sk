@@ -1,11 +1,8 @@
-
-// Un commentaire simple tout à fait normal au début
-    x = 10 / 2 /* Attention ici il y a un faux commentaire multilignes avec un slash et une étoile séparés */
-    y = 5 * /* Un vrai multilignes qui commence au milieu d'une ligne de code...
-    ... et qui continue sur une autre ligne
-     */ 20
-    // Un autre avec des espaces bizarres   // et un double slash planté au milieu d'une ligne
-    resultat = a / b // Division classique suivie d'un commentaire /* avec un faux multilignes dedans */
-    /* Un bloc multilignes 
-       qui s'ouvre 
-       mais qui ne se ferme jamais... et ca nous on s'en fou c'est le compilateur rust qui s'en charge
+x = 10
+    // commentaire indenté tout seul sur sa ligne
+y = 20
+    url = "http://exemple.com"
+z = a // b // deux doubles slash sur la meme ligne
+    
+w = 5
+	w2 = 6

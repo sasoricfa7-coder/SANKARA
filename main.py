@@ -40,9 +40,6 @@ def charger(nom_fichier) :
 def indentation(dictionnaire) :
     dictionnaire_final = {}
     dictionnaire_commentaire = {}
-    dict_longueur_commentaire = {}
-    valide = False
-    chaine_commentaire = ""
     for i, ligne in dictionnaire.items() :
         if ligne == "" :
             continue
@@ -52,38 +49,17 @@ def indentation(dictionnaire) :
             print(f"{rouge} [ligne : {i}] : {ligne} {simple}")
             arret()
 
-        if "/*" in ligne or valide :
-            fin = False
-            valide = True
-            index = ligne.find("/*")
-            index_depart = index # pour pouvoir bien replacer les commentaires dans la code source rust generer
-
-            if "*/" in ligne :
-                marge = ligne.find("*/") + 2
-                valide = False
-            else :
-                marge = len(ligne)
-            for index in range(marge) :
-                chaine_commentaire += ligne[index]
-
-            dictionnaire_commentaire[i] = chaine_commentaire
-            dict_longueur_commentaire[index_depart] = len(chaine_commentaire) # J'enregistre d'abord 
-            chaine_commentaire = "" # regarde c'est après avoir enregistrer la longueur que je vide 
-
-            continue
-
-        elif "//" in ligne :
+        if "//" in ligne : # c'est exprès on verifie d'abord que le code est bien identé
             index = ligne.find("//")
 
-            if index != -1 and ligne[:index].isspace() :
+            if index == 0:
                 dictionnaire_commentaire[i] = ligne
-                dict_longueur_commentaire[index] = len(ligne)
+                continue
 
             else :
                 temporaire = ligne
                 ligne = ligne[:index]
-                dictionnaire_commentaire[i] = temporaire[index:]
-                dict_longueur_commentaire [index] = len(temporaire[index:])
+                dictionnaire_commentaire[i] = temporaire[index:] # pas besoin de savoir ou était placer, a ce stade le commentaire est à la fin
 
         niveau_indentation = nbr_espace // 4
         ligne_info = {
@@ -94,21 +70,18 @@ def indentation(dictionnaire) :
         
 
 
-    return dictionnaire_final, dictionnaire_commentaire, dict_longueur_commentaire
+    return dictionnaire_final, dictionnaire_commentaire
 
 def main() : # La fonction principale
     nom_fichier =  verifie_debut()
     dictionnaire, table_correspondance = charger(nom_fichier)
-    dictionnaire_final, dictionnaire_commentaire, dict_longueur_commentaire =  indentation(dictionnaire)
+    dictionnaire_final, dictionnaire_commentaire =  indentation(dictionnaire)
 
     for i, j in dictionnaire_final.items() :
         print(i, j.items())
 
     for i, j in dictionnaire_commentaire.items() :
-        print(i, j.items())
-
-    for i, j in dict_longueur_commentaire.items() :
-        print(i, j.items())
+        print(i, j)
 
 if __name__ == "__main__" :
     main()
