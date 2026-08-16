@@ -79,8 +79,11 @@ def indentation(dictionnaire) :
                 dictionnaire_commentaire[i] = ligne
                 dict_longueur_commentaire[index] = len(ligne)
 
-            
-
+            else :
+                temporaire = ligne
+                ligne = ligne[:index]
+                dictionnaire_commentaire[i] = temporaire[index:]
+                dict_longueur_commentaire [index] = len(temporaire[index:])
 
         niveau_indentation = nbr_espace // 4
         ligne_info = {
@@ -93,24 +96,18 @@ def indentation(dictionnaire) :
 
     return dictionnaire_final, dictionnaire_commentaire, dict_longueur_commentaire
 
-    
-
-
-
-
-
-
-
-
-
-
-
 def main() : # La fonction principale
     nom_fichier =  verifie_debut()
     dictionnaire, table_correspondance = charger(nom_fichier)
     dictionnaire_final, dictionnaire_commentaire, dict_longueur_commentaire =  indentation(dictionnaire)
 
     for i, j in dictionnaire_final.items() :
+        print(i, j.items())
+
+    for i, j in dictionnaire_commentaire.items() :
+        print(i, j.items())
+
+    for i, j in dict_longueur_commentaire.items() :
         print(i, j.items())
 
 if __name__ == "__main__" :
