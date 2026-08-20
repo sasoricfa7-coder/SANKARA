@@ -19,5 +19,5 @@ AVANTAGES_CHOIX :
 Création :
 {
 	d'abord en python pour le prototypage rapide,
-	puis la v1 est prévu en RUST
+	puis la v2 est prévu en RUST
 }

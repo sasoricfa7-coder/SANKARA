@@ -87,16 +87,57 @@ def indentation(dictionnaire) :
 
     return dictionnaire_final, dictionnaire_commentaire
 
+def pile_indentation() :
+    global dictionnaire_final
+
+    L = [0]
+    for i, info in dictionnaire_final.items() :
+        niveau_indentation = info["niveau_indentation"]
+        sommet_actu = L[-1]
+
+        if niveau_indentation > sommet_actu and ((niveau_indentation - sommet_actu) == 1) :
+            L.append(niveau_indentation)
+            dictionnaire_final[i]["reçoit"] = "{"
+            continue
+
+        elif niveau_indentation < sommet_actu :
+            s = 0
+            while L and L[-1] > niveau_indentation:
+                L.pop()
+                s += 1
+            if L[-1] != niveau_indentation :
+                print("identation non respecter.")
+                print(i, " : ", info["contenu"])
+                arret()
+                
+            dictionnaire_final[i]["nombre_fermeture"] = s
+            dictionnaire_final[i]["reçoit"] = "}" * s
+            
+            continue
+
+        else :
+            print("identation non respecter.")
+            print(i, " : ", info["contenu"])
+            arret()
+
+    if L[-1] != 0 :
+        s = 0
+        while L and L[-1] > 0 :
+            L.pop()
+            s += 1
+        dernière_ligne = list(dictionnaire_final.keys())[-1]
+        dictionnaire_final[dernière_ligne]["nombre_fermeture"] = s
+        dictionnaire_final[dernière_ligne]["reçoit"] = "}" * s
+        
+    return L
+
 def main() : # La fonction principale
     nom_fichier =  verifie_debut()
     dictionnaire, table_correspondance = charger(nom_fichier)
     dictionnaire_final, dictionnaire_commentaire =  indentation(dictionnaire)
 
-    for i, j in dictionnaire_final.items() :
-        print(i, j.items())
-
-    for i, j in dictionnaire_commentaire.items() :
-        print(i, j)
+    pile = pile_indentation() # Il va utiliser le dictionnaire globalement car si le code est lourd je gaspillerai la rame
+    
 
 if __name__ == "__main__" :
     main()
