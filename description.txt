@@ -4,7 +4,7 @@ SANKARA n'est pas un langage.
 SANKARA n'a pas de compilateur propre.
 SANKARA est dépendant de RUST à 100%.
 ...
-}
+} SANKARA est un transpileur de RUST
 
 les choix sont assumés.
 
@@ -20,4 +20,13 @@ Création :
 {
 	d'abord en python pour le prototypage rapide,
 	puis la v2 est prévu en RUST
+}
+Au debut je détestait l'indentation de python car en cas de copier/coller mais je me suis rendu compte avec les délimiteurs 
+par blocs ({}) je faisait de l'indentation pour la beauté du code alors pourquoi ne pas profiter de l'indentation.
+Différence
+{
+	indentation && : --> {}
+	:= --> let nom_de_la_variable  = valeur_que_je_lui_donner un peu comme en go (x := 2) --> let x = 2
+	puis en SANKARA j'écrirai les noms des constantes en minuscules ou majuscules et il les mets en majuscules.
+	les cas tordus du rust ne seront pas pris en charge car SANKARA n'est qu'un simple transpileur
 }
