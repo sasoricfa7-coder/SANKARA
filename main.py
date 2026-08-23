@@ -89,6 +89,14 @@ def indentation(dictionnaire) :
 
 def pile_indentation() :
     global dictionnaire_final
+    if not dictionnaire_final :
+        print(f"Erreur : {rouge} Fichier vide ou sans code exploitable. {simple}")
+        arret()
+        
+    pre = next(iter(dictionnaire_final))
+    if dictionnaire_final[pre]["niveau_indentation"] != 0 :
+        print(f"Erreur d'indentation : {rouge} 0 comme niveau initiale est obligatoire{simple}")
+        arret()
 
     L = [0]
     for i, info in dictionnaire_final.items() :
@@ -115,6 +123,9 @@ def pile_indentation() :
             
             continue
 
+        elif niveau_indentation == sommet_actu :
+            continue
+
         else :
             print("identation non respecter.")
             print(i, " : ", info["contenu"])
@@ -126,18 +137,21 @@ def pile_indentation() :
             L.pop()
             s += 1
         dernière_ligne = list(dictionnaire_final.keys())[-1]
-        dictionnaire_final[dernière_ligne]["nombre_fermeture"] = s
-        dictionnaire_final[dernière_ligne]["reçoit"] = "}" * s
+        dictionnaire_final[dernière_ligne]["reçoit"] = dictionnaire_final[dernière_ligne].get("reçoit", "") + "}" * s
         
     return L
 
 def main() : # La fonction principale
+    global dictionnaire_final
     nom_fichier =  verifie_debut()
     dictionnaire, table_correspondance = charger(nom_fichier)
     dictionnaire_final, dictionnaire_commentaire =  indentation(dictionnaire)
 
     pile = pile_indentation() # Il va utiliser le dictionnaire globalement car si le code est lourd je gaspillerai la rame
-    
 
+    for i, j in dictionnaire_final.items() :
+        print(i, j)
+        
 if __name__ == "__main__" :
+    dictionnaire_final = {}
     main()

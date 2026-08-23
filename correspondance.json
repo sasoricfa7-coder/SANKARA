@@ -1,10 +1,13 @@
 {
-	"print" : "println!",
-	"var" : "let",
-	"def" : "fn" ,
-	"elif" : "else if",
-	"not" : "!",
-	"or" : "||" ,
-	"and" : "&&" ,
-	":" : "=>" 
+	"correspondance" : {
+		"print" : "println!",
+		"var" : "let",
+		"def" : "fn",
+		"elif" : "else if",
+		"not" : "!",
+		"or" : "||",
+		"and" : "&&"
+	},
+	"mots_cles_bloc" : ["def", "if", "elif", "else", "for", "while", "match"],
+	"blocs_speciaux" : ["def", "match"]
 }
